@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 import texttable as tt
 
 path = 'C:\\Users\\MC_VIC\\Dropbox\\1 семестр\\ПИ\\лр3\\students.csv'
@@ -29,7 +31,8 @@ class Students:
         tab = tt.Texttable()
 
         if d == None:
-            d = self.data
+            ##d = self.data                             ##original, no sorted data
+            d = sorted(self.data, key=itemgetter(1))    ##sorted by surname data
         if t == None:
             t = self.title_data
 
