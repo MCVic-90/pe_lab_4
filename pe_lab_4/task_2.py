@@ -31,15 +31,20 @@ class Students:
         tab = tt.Texttable()
 
         if d == None:
-            ##d = self.data                             ##original, no sorted data
-            d = sorted(self.data, key=itemgetter(1))    ##sorted by surname data
+            d = self.data                                   ##original, no sorted data
+            ##d = sorted(self.data, key=itemgetter(1))      ##sorted by surname data
         if t == None:
             t = self.title_data
 
         tab.header(t)
 
+        ##for row in d:                                       ##table with all info
+            ##tab.add_row(row)
+
+        n = int(input("Введите возрастной ограничитель: ")) ##enter "n"
         for row in d:
-            tab.add_row(row)
+            if int(row[2]) >= n:                            ##table with older "n" age
+                tab.add_row(row)
 
         table = tab.draw()
         print(table)
