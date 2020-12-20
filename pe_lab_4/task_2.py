@@ -1,9 +1,11 @@
 from operator import itemgetter
 import csv
 import texttable as tt
+import pickle
 
 path = 'C:\\Users\\MC_VIC\\Dropbox\\1 семестр\\ПИ\\лр3\\students.csv'
 path2 = 'C:\\Users\\MC_VIC\\Dropbox\\1 семестр\\ПИ\\лр3\\students_changed.csv'
+path3 = 'C:\\Users\\MC_VIC\\Dropbox\\1 семестр\\ПИ\\лр3\\students_pickle.csv'
 
 
 class Students:
@@ -33,25 +35,25 @@ class Students:
         tab = tt.Texttable()
 
         if d == None:
-            d = self.data                                   ##original, no sorted data
+            d = self.data  ##original, no sorted data
             ##d = sorted(self.data, key=itemgetter(1))      ##sorted by surname data
         if t == None:
             t = self.title_data
 
         tab.header(t)
 
-        for row in d:                                       ##table with all info
+        for row in d:  ##table with all info
             tab.add_row(row)
 
         ##n = int(input("Введите возрастной ограничитель: ")) ##enter "n"
         ##for row in d:
-            ##if int(row[2]) >= n:                            ##table with older "n" age
-                ##tab.add_row(row)
+        ##if int(row[2]) >= n:                            ##table with older "n" age
+        ##tab.add_row(row)
 
         table = tab.draw()
         print(table)
 
-    def add_new_info(self):                                   ##add new student and write new file
+    def add_new_info(self):  ##add new student and write new file
 
         new_number = self.data[-1][0]
         new_fio = input("Введите ФИО нового студента: ")
@@ -64,10 +66,10 @@ class Students:
             for i in reader:
                 old_data.append(i)
 
-        new_data = old_data + [[str(int(new_number)+1),
-                               str(new_fio),
-                               str(new_age),
-                               str(new_group)]]
+        new_data = old_data + [[str(int(new_number) + 1),
+                                str(new_fio),
+                                str(new_age),
+                                str(new_group)]]
 
         new_csv = str(path[:-4] + '_changed.csv')
 
@@ -77,8 +79,20 @@ class Students:
 
         print("Новые данные сохранены в новый файл " + new_csv + "!")
 
+    def pickle_create_file(self, path):
+        file = []
+        file.append(self.title_data[:-2])
+        for i in self.data:
+            file.append([i[0], i[1]])
+
+        path = path[:-4] + '_pickle.csv'
+        f = open(path, 'wb')
+        pickle.dump(file, f)
+        print("Новый файл PICKLE сохранен в " + path + "!")
+
 
 s = Students()
 s.read_file(path)
 s.add_new_info()
 s.read_file(path2)
+s.pickle_create_file(path)
