@@ -15,6 +15,8 @@ class Students:
     def read_file(self, path):
         file = open(path, 'r', encoding='utf-8')
         self.data = file.read()
+        if path2:
+            self.data = self.data[:-1]
         file.close()
 
         self.convert_str_to_list(self.data)
