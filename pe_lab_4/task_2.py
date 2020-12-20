@@ -90,9 +90,25 @@ class Students:
         pickle.dump(file, f)
         print("Новый файл PICKLE сохранен в " + path + "!")
 
+    def pickle_read_file(self, path):
+        f = open(path, 'rb')
+        new_file = pickle.load(f)
+
+        pickle_tab = tt.Texttable()
+
+        pickle_tab.header(new_file[0])
+
+        for i in new_file[1:]:
+            pickle_tab.add_row(i)
+
+        table = pickle_tab.draw()
+
+        print(table)
+
 
 s = Students()
 s.read_file(path)
 s.add_new_info()
 s.read_file(path2)
 s.pickle_create_file(path)
+s.pickle_read_file(path3)
